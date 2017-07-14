@@ -40,6 +40,7 @@ static int cfs_readlink(const char *path, char *buf, size_t size)
 	if ((count = readlink(path, buf, size - 1)) == -1)
 		return -errno;
 
+	/* Q: really needed? */
 	buf[count] = '\0';
 	return 0;
 }
@@ -150,6 +151,7 @@ static int cfs_truncate(const char *path, off_t size)
 
 static int cfs_utimens(const char *path, const struct timespec ts[2])
 {
+	/* Q: wrong dirfd? */
 	if (utimensat(0, path, ts, AT_SYMLINK_NOFOLLOW) == -1)
 		return -errno;
 
